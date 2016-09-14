@@ -1,7 +1,7 @@
 /* eslint new-cap: [2, {"capIsNewExceptions": ["Match.ObjectIncluding", "Match.Optional"]}] */
 
 Meteor.methods({
-	'livechat:saveCustomer'(_id, customerData) {
+	'livechat:saveCustomer'(_id, customerData, customerAgents) {
 		if (!Meteor.userId() || !RocketChat.authz.hasPermission(Meteor.userId(), 'view-livechat-manager')) {
 			throw new Meteor.Error('error-not-allowed', 'Not allowed', { method: 'livechat:saveCustomer' });
 		}
@@ -19,6 +19,6 @@ Meteor.methods({
 			}
 		}
 
-		return RocketChat.models.LivechatCustomer.createOrUpdateCustomer(_id, customerData.name);
+		return RocketChat.models.LivechatCustomer.createOrUpdateCustomer(_id, customerData.name, customerAgents);
 	}
 });

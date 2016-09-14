@@ -5,17 +5,18 @@ RocketChat.QueueMethods = {
 	 * of open chats is paired with the incoming livechat
 	 */
 	'Least_Amount' : function(guest, message, roomInfo) {
+		const customer = RocketChat.models.LivechatCustomer.findOneById(message.livechatToken);
+
+		if (!customer) {
+			throw new Meteor.Error('Invalid_livechat_token', 'Invalid token to use livechat in this website.');
+		}
+
 		const agent = RocketChat.Livechat.getNextAgent(guest.department);
 		if (!agent) {
 			throw new Meteor.Error('no-agent-online', 'Sorry, no online agents');
 		}
 
 		const roomCode = RocketChat.models.Rooms.getNextLivechatRoomCode();
-		const customer = RocketChat.models.LivechatCustomer.findOneById(message.livechatToken);
-
-		if (!customer) {
-			throw new Meteor.Error('invalid-livechat-token', 'Invalid token to use livechat in this website.');
-		}
 
 		const room = _.extend({
 			_id: message.rid,
@@ -78,10 +79,16 @@ RocketChat.QueueMethods = {
 	 * only the client until paired with an agent
 	 */
 	'Guest_Pool' : function(guest, message, roomInfo) {
-		let agents = RocketChat.Livechat.getOnlineAgents(guest.department);
+		const customer = RocketChat.models.LivechatCustomer.findOneById(message.livechatToken);
+
+		if (!customer) {
+			throw new Meteor.Error('Invalid_livechat_token', 'Invalid token to use livechat in this website.');
+		}
+
+		let agents = RocketChat.Livechat.getOnlineAgents(guest.department, message.livechatToken);
 
 		if (agents.count() === 0 && RocketChat.settings.get('Livechat_guest_pool_with_no_agents')) {
-			agents = RocketChat.Livechat.getAgents(guest.department);
+			agents = RocketChat.Livechat.getAgents(guest.department, message.livechatToken);
 		}
 
 		if (agents.count() === 0) {
@@ -89,11 +96,6 @@ RocketChat.QueueMethods = {
 		}
 
 		const roomCode = RocketChat.models.Rooms.getNextLivechatRoomCode();
-		const customer = RocketChat.models.LivechatCustomer.findOneById(message.livechatToken);
-
-		if (!customer) {
-			throw new Meteor.Error('invalid-livechat-token', 'Invalid token to use livechat in this website.');
-		}
 
 		const agentIds = [];
 

@@ -69,7 +69,8 @@ Template.livechatWindow.onCreated(function() {
 	};
 
 	// get all needed live chat info for the user
-	Meteor.call('livechat:getInitialData', visitor.getToken(), (err, result) => {
+	var livechatToken = FlowRouter.getParam('_livechatToken');
+	Meteor.call('livechat:getInitialData', visitor.getToken(), livechatToken, (err, result) => {
 		if (err) {
 			console.error(err);
 		} else {

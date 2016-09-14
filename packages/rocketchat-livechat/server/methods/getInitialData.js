@@ -1,5 +1,11 @@
 Meteor.methods({
-	'livechat:getInitialData'(visitorToken) {
+	'livechat:getInitialData'(visitorToken, livechatToken) {
+
+		const customer = RocketChat.models.LivechatCustomer.findOneById(livechatToken);
+		if (!customer) {
+			throw new Meteor.Error('Invalid_livechat_token', 'Invalid token to use livechat in this website.');
+		}
+
 		var info = {
 			enabled: null,
 			title: null,
@@ -49,11 +55,18 @@ Meteor.methods({
 			info.triggers.push(trigger);
 		});
 
-		RocketChat.models.LivechatDepartment.findEnabledWithAgents().forEach((department) => {
+		RocketChat.models.LivechatDepartment.findEnabledWithAgents(livechatToken).forEach((department) => {
 			info.departments.push(department);
 		});
 
-		info.online = RocketChat.models.Users.findOnlineAgents().count() > 0;
+		var agents = RocketChat.models.LivechatCustomerAgents.findByCustomerId(livechatToken).fetch();
+
+		if (agents.length === 0) {
+			info.online = false;
+			return info;
+		}
+
+		info.online = RocketChat.models.Users.findOnlineUserFromList(_.pluck(agents, 'username')).count() > 0;
 
 		return info;
 	}

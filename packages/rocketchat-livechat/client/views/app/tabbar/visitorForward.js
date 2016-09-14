@@ -3,13 +3,35 @@ Template.visitorForward.helpers({
 		return Template.instance().visitor.get();
 	},
 	hasDepartments() {
-		return LivechatDepartment.find({ enabled: true }).count() > 0;
+		var room = Template.instance().room.get();
+		return LivechatDepartment.find({ enabled: true, 'customer._id': room.customer._id }).count() > 0;
 	},
 	departments() {
-		return LivechatDepartment.find({ enabled: true });
+		var room = Template.instance().room.get();
+		return LivechatDepartment.find({ enabled: true, 'customer._id': room.customer._id });
 	},
 	agents() {
-		return AgentUsers.find({ _id: { $ne: Meteor.userId() } }, { sort: { name: 1, username: 1 } });
+		var room = Template.instance().room.get();
+		var agentsForCustomer = LivechatCustomerAgents.find({customerId: room.customer._id}).fetch();
+		if (agentsForCustomer && agentsForCustomer.length > 0) {
+			var agentIds = [];
+			agentsForCustomer.forEach((agent) => {
+				agentIds.push(agent.agentId);
+			});
+
+			let query = {
+				$and: [
+					{ _id: { $ne: Meteor.userId() }},
+					{ _id: { $in: agentIds }}
+				]
+			};
+
+			let options = {
+				sort: { name: 1, username: 1 }
+			};
+
+			return AgentUsers.find(query, options);
+		}
 	},
 	agentName() {
 		return this.name || this.username;
@@ -29,6 +51,7 @@ Template.visitorForward.onCreated(function() {
 	});
 
 	this.subscribe('livechat:departments');
+	this.subscribe('livechat:customerAgents');
 	this.subscribe('livechat:agents');
 });
 

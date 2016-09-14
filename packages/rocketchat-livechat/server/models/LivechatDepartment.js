@@ -70,10 +70,11 @@ class LivechatDepartment extends RocketChat.models._Base {
 		return this.remove(query);
 	}
 
-	findEnabledWithAgents() {
+	findEnabledWithAgents(livechatToken) {
 		var query = {
 			numAgents: { $gt: 0 },
-			enabled: true
+			enabled: true,
+			'customer._id': livechatToken
 		};
 		return this.find(query);
 	}

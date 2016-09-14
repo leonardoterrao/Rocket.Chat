@@ -1,8 +1,24 @@
 <template name="livechatInstallation">
 	<p>{{{_ "To_install_RocketChat_Livechat_in_your_website_copy_paste_this_code_above_the_last_body_tag_on_your_site"}}}</p>
 
-	<div class="livechat-code">
-		<textarea class="clipboard" data-clipboard-target=".livechat-code textarea">{{script}}</textarea>
-		<button class="button clipboard" data-clipboard-target=".livechat-code textarea"><i class="icon-docs"></i>{{_ "Copy_to_clipboard"}}</button>
-	</div>
+	{{#if Template.subscriptionsReady}}
+        <div>
+            <label>{{_ "Customer"}}</label>
+            <div>
+                <select id="customerSelector">
+                    <option selected="true" value="">{{_ "Select_a_customer"}}</option>
+					{{#each customers}}
+                        <option value="{{_id}}">{{customer}}</option>
+					{{/each}}
+                </select>
+            </div>
+        </div>
+
+        <div class="livechat-code">
+            <textarea id="script" class="clipboard" data-clipboard-target=".livechat-code textarea">{{script}}</textarea>
+            <button class="button clipboard" data-clipboard-target=".livechat-code textarea"><i class="icon-docs"></i>{{_ "Copy_to_clipboard"}}</button>
+        </div>
+	{{else}}
+		{{> loading}}
+	{{/if}}
 </template>
