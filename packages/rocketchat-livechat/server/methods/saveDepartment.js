@@ -10,7 +10,10 @@ Meteor.methods({
 			check(_id, String);
 		}
 
-		check(departmentData, Match.ObjectIncluding({ enabled: Boolean, name: String, description: Match.Optional(String), agents: Match.Optional([Match.ObjectIncluding({ _id: String, username: String })]) }));
+		check(departmentData, Match.ObjectIncluding({ enabled: Boolean, name: String, description: Match.Optional(String),
+			agents: Match.Optional([Match.ObjectIncluding({ _id: String, username: String })]),
+			customer: Match.Optional(Match.ObjectIncluding({ _id: String, name: String }))
+		}));
 
 		if (_id) {
 			const department = RocketChat.models.LivechatDepartment.findOneById(_id);
@@ -19,6 +22,7 @@ Meteor.methods({
 			}
 		}
 
-		return RocketChat.models.LivechatDepartment.createOrUpdateDepartment(_id, departmentData.enabled, departmentData.name, departmentData.description, departmentAgents);
+		return RocketChat.models.LivechatDepartment.createOrUpdateDepartment(
+			_id, departmentData.enabled, departmentData.name, departmentData.description, departmentAgents, departmentData.customer);
 	}
 });

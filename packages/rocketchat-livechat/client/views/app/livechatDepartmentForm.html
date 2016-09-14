@@ -16,6 +16,17 @@
 							<input type="text" name="name" value="{{department.name}}" placeholder="{{_ "Name"}}" />
 						</div>
 					</div>
+                    <div>
+                        <label>{{_ "Customer"}}</label>
+                        <div>
+                            <select name="customer">
+                                <option value="">{{_ "Select_a_customer"}}</option>
+								{{#each customers}}
+                                    <option selected="{{$eq department.customer._id _id}}" value="{{_id}}">{{customer}}</option>
+								{{/each}}
+                            </select>
+                        </div>
+                    </div>
 					<div class="input-line">
 						<label>{{_ "Description"}}</label>
 						<div>

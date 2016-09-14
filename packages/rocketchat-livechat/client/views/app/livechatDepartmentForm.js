@@ -11,6 +11,9 @@ Template.livechatDepartmentForm.helpers({
 	availableAgents() {
 		var selected = _.pluck(Template.instance().selectedAgents.get(), 'username');
 		return AgentUsers.find({ username: { $nin: selected }}, { sort: { username: 1 } });
+	},
+	customers() {
+		return LivechatCustomer.find();
 	}
 });
 
@@ -23,6 +26,7 @@ Template.livechatDepartmentForm.events({
 		var enabled = instance.$('input[name=enabled]:checked').val();
 		var name = instance.$('input[name=name]').val();
 		var description = instance.$('textarea[name=description]').val();
+		var customerId  = instance.$('select[name=customer]').val();
 
 		if (enabled !== '1' && enabled !== '0') {
 			return toastr.error(t('Please_select_enabled_yes_or_no'));
@@ -32,13 +36,23 @@ Template.livechatDepartmentForm.events({
 			return toastr.error(t('Please_fill_a_name'));
 		}
 
+		if (!customerId) {
+			return toastr.error(t('Please_fill_a_customer'));
+		}
+
 		var oldBtnValue = $btn.html();
 		$btn.html(t('Saving'));
 
+		var customer = LivechatCustomer.findOne(customerId);
+
 		var departmentData = {
-			enabled: enabled === '1' ? true : false,
+			enabled: enabled === '1',
 			name: name.trim(),
-			description: description.trim()
+			description: description.trim(),
+			customer: {
+				_id: customerId,
+				name: customer.name
+			}
 		};
 
 		var departmentAgents = [];
@@ -89,6 +103,7 @@ Template.livechatDepartmentForm.onCreated(function() {
 	this.selectedAgents = new ReactiveVar([]);
 
 	this.subscribe('livechat:agents');
+	this.subscribe('livechat:customers');
 
 	this.autorun(() => {
 		var sub = this.subscribe('livechat:departments', FlowRouter.getParam('_id'));

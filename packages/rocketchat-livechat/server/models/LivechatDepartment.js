@@ -20,14 +20,18 @@ class LivechatDepartment extends RocketChat.models._Base {
 		return this.find(query, options);
 	}
 
-	createOrUpdateDepartment(_id, enabled, name, description, agents, extraData) {
+	createOrUpdateDepartment(_id, enabled, name, description, agents, customer, extraData) {
 		agents = [].concat(agents);
 
 		var record = {
 			enabled: enabled,
 			name: name,
 			description: description,
-			numAgents: agents.length
+			numAgents: agents.length,
+			customer: {
+				_id: customer._id,
+				name: customer.name
+			}
 		};
 
 		_.extend(record, extraData);
