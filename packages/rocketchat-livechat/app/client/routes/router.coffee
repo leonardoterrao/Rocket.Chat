@@ -1,6 +1,6 @@
 BlazeLayout.setRoot('body');
 
-FlowRouter.route '/livechat',
+FlowRouter.route '/livechat/:_livechatToken',
 	name: 'index'
 
 	triggersEnter: [

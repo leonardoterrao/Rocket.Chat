@@ -11,6 +11,11 @@ RocketChat.QueueMethods = {
 		}
 
 		const roomCode = RocketChat.models.Rooms.getNextLivechatRoomCode();
+		const customer = RocketChat.models.LivechatCustomer.findOneById(message.livechatToken);
+
+		if (!customer) {
+			throw new Meteor.Error('invalid-livechat-token', 'Invalid token to use livechat in this website.');
+		}
 
 		const room = _.extend({
 			_id: message.rid,
@@ -21,6 +26,10 @@ RocketChat.QueueMethods = {
 			usernames: [agent.username, guest.username],
 			t: 'l',
 			ts: new Date(),
+			customer: {
+				_id: customer._id,
+				name: customer.name
+			},
 			v: {
 				_id: guest._id,
 				token: message.token
@@ -40,6 +49,10 @@ RocketChat.QueueMethods = {
 			open: true,
 			unread: 1,
 			code: roomCode,
+			customer: {
+				_id: customer._id,
+				name: customer.name
+			},
 			u: {
 				_id: agent.agentId,
 				username: agent.username
@@ -76,6 +89,11 @@ RocketChat.QueueMethods = {
 		}
 
 		const roomCode = RocketChat.models.Rooms.getNextLivechatRoomCode();
+		const customer = RocketChat.models.LivechatCustomer.findOneById(message.livechatToken);
+
+		if (!customer) {
+			throw new Meteor.Error('invalid-livechat-token', 'Invalid token to use livechat in this website.');
+		}
 
 		const agentIds = [];
 
@@ -93,6 +111,10 @@ RocketChat.QueueMethods = {
 			name: guest.name || guest.username,
 			ts: new Date(),
 			code: roomCode,
+			customer: {
+				_id: customer._id,
+				name: customer.name
+			},
 			department: guest.department,
 			agents: agentIds,
 			status: 'open',
@@ -107,6 +129,10 @@ RocketChat.QueueMethods = {
 			usernames: [guest.username],
 			t: 'l',
 			ts: new Date(),
+			customer: {
+				_id: customer._id,
+				name: customer.name
+			},
 			v: {
 				_id: guest._id,
 				token: message.token

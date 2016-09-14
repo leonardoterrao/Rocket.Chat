@@ -75,7 +75,7 @@ class @ChatMessages
 			rid ?= visitor.getRoom(true)
 
 			sendMessage = (callback) ->
-				msgObject = { _id: Random.id(), rid: rid, msg: msg, token: visitor.getToken() }
+				msgObject = { _id: Random.id(), rid: rid, msg: msg, token: visitor.getToken(), livechatToken: FlowRouter.getParam '_livechatToken' }
 				MsgTyping.stop(rid)
 
 				Meteor.call 'sendMessageLivechat', msgObject, (error, result) ->

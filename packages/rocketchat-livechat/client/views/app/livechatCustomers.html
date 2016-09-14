@@ -1,0 +1,24 @@
+<template name="livechatCustomers">
+    <div class="list">
+        <table>
+            <thead>
+            <tr>
+                <th width="50%">{{_ "Token"}}</th>
+                <th width="50%">{{_ "Customer"}}</th>
+                <th>{{_ "Delete"}}</th>
+            </tr>
+            </thead>
+            <tbody>
+			{{#each customers}}
+                <tr class="customer-info row-link" data-id="{{_id}}">
+                    <td>{{_id}}</td>
+                    <td>{{name}}</td>
+                    <td><a href="#remove" class="remove-customer"><i class="icon-trash"></i></a></td>
+                </tr>
+			{{/each}}
+            </tbody>
+        </table>
+    </div>
+
+    <a href="{{pathFor 'livechat-customer-new'}}" class="button primary">{{_ "New_Customer"}}</a>
+</template>

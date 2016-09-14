@@ -15,6 +15,7 @@ Meteor.startup ->
 				description: 1
 				sysMes: 1
 				joinCodeRequired: 1
+				customer: 1
 
 		if RocketChat.authz.hasPermission(this.userId, 'view-join-code')
 			options.fields.joinCode = 1
@@ -43,6 +44,7 @@ Meteor.startup ->
 				jitsiTimeout: 1
 				description: 1
 				sysMes: 1
+				customer: 1
 
 		user = RocketChat.models.Users.findOneById this.userId, fields: username: 1
 		return RocketChat.models.Rooms.findByTypeAndNameContainingUsername 'p', identifier, user.username, options
@@ -57,6 +59,7 @@ Meteor.startup ->
 				usernames: 1
 				topic: 1
 				jitsiTimeout: 1
+				customer: 1
 
 		user = RocketChat.models.Users.findOneById this.userId, fields: username: 1
 		if RocketChat.authz.hasAtLeastOnePermission(this.userId, ['view-d-room', 'view-joined-room'])

@@ -1,0 +1,31 @@
+<template name="livechatCustomerForm">
+    <form id="customer-form" data-id="{{customer._id}}">
+        <div class="rocket-form">
+			{{#if Template.subscriptionsReady}}
+                <fieldset>
+					{{#if customer._id}}
+                        <div class="input-line">
+                            <label>{{_ "Customer"}}</label>
+                            <div>
+                                <input type="text" readonly name="id" value="{{customer._id}}" placeholder="{{_ "Customer"}}" />
+                            </div>
+                        </div>
+					{{/if}}
+
+                    <div class="input-line">
+                        <label>{{_ "Customer"}}</label>
+                        <div>
+                            <input type="text" name="name" value="{{customer.name}}" placeholder="{{_ "Customer"}}" />
+                        </div>
+                    </div>
+                </fieldset>
+                <div class="submit">
+                    <button type="button" class="button secondary back"><i class="icon-left-big"></i><span>{{_ "Back"}}</span></button>
+                    <button class="button save"><i class="icon-floppy"></i><span>{{_ "Save"}}</span></button>
+                </div>
+			{{else}}
+				{{> loading}}
+			{{/if}}
+        </div>
+    </form>
+</template>

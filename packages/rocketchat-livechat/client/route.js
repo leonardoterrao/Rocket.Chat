@@ -28,6 +28,30 @@ AccountBox.addRoute({
 }, livechatManagerRoutes);
 
 AccountBox.addRoute({
+	name: 'livechat-customers',
+	path: '/customers',
+	sideNav: 'livechatFlex',
+	i18nPageTitle: 'Customers',
+	pageTemplate: 'livechatCustomers'
+}, livechatManagerRoutes);
+
+AccountBox.addRoute({
+	name: 'livechat-customer-new',
+	path: '/customers/new',
+	sideNav: 'livechatFlex',
+	i18nPageTitle: 'New_Customer',
+	pageTemplate: 'livechatCustomerForm'
+}, livechatManagerRoutes);
+
+AccountBox.addRoute({
+	name: 'livechat-customer-edit',
+	path: '/customers/:_id/edit',
+	sideNav: 'livechatFlex',
+	i18nPageTitle: 'Edit_Customer',
+	pageTemplate: 'livechatCustomerForm'
+}, livechatManagerRoutes);
+
+AccountBox.addRoute({
 	name: 'livechat-departments',
 	path: '/departments',
 	sideNav: 'livechatFlex',

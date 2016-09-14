@@ -48,6 +48,13 @@ Template.room.helpers
 
 		return RocketChat.roomTypes.getRoomName roomData?.t, roomData
 
+	customer: ->
+		roomData = Session.get('roomData' + this._id)
+		return '' unless roomData
+
+		if (roomData.customer)
+			return roomData.customer.name
+
 	roomTopic: ->
 		roomData = Session.get('roomData' + this._id)
 		return '' unless roomData

@@ -14,6 +14,14 @@ Template.chatRoomItem.helpers
 	name: ->
 		return this.name
 
+	customer: ->
+		if (this.customer)
+			return this.customer.name;
+
+		roomData = Session.get('roomData' + this.rid)
+		if (roomData && roomData.customer)
+			return Session.get('roomData' + this.rid).customer.name
+
 	roomIcon: ->
 		return RocketChat.roomTypes.getIcon this.t
 

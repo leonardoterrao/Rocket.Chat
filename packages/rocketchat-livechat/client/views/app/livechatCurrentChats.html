@@ -3,9 +3,10 @@
 		<table>
 			<thead>
 				<tr>
-					<th width="34%">{{_ "Name"}}</th>
-					<th width="33%">{{_ "Started_At"}}</th>
-					<th width="33%">{{_ "Last_Message_At"}}</th>
+                    <th width="25%">{{_ "Name"}}</th>
+                    <th width="25%">{{_ "Started_At"}}</th>
+                    <th width="25%">{{_ "Customer"}}</th>
+                    <th width="25%">{{_ "Last_Message_At"}}</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -13,6 +14,7 @@
 					<tr class="row-link">
 						<td>{{label}}</td>
 						<td>{{startedAt}}</td>
+                        <td>{{customer.name}}</td>
 						<td>{{lastMessage}}</td>
 					</tr>
 				{{/each}}
