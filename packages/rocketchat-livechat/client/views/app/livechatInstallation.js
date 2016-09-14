@@ -1,20 +1,3 @@
-Template.livechatInstallation.helpers({
-	customers() {
-		return LivechatCustomer.find();
-	},
-	script() {
-		return loadScript('');
-	}
-});
-
-Template.livechatInstallation.events({
-	"change #customerSelector"(e, instance) {
-		e.preventDefault();
-		var customer = e.target.value;
-		$('#script').val(loadScript(customer));
-	}
-});
-
 function loadScript(customer) {
 	let siteUrl = s.rtrim(RocketChat.settings.get('Site_Url'), '/');
 
@@ -29,6 +12,23 @@ function loadScript(customer) {
 </script>
 <!-- End of Rocket.Chat Livechat Script -->`;
 }
+
+Template.livechatInstallation.helpers({
+	customers() {
+		return LivechatCustomer.find();
+	},
+	script() {
+		return loadScript('');
+	}
+});
+
+Template.livechatInstallation.events({
+	'change #customerSelector'(e) {
+		e.preventDefault();
+		var customer = e.target.value;
+		$('#script').val(loadScript(customer));
+	}
+});
 
 Template.livechatInstallation.onCreated(function() {
 	this.subscribe('livechat:customers');

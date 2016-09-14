@@ -12,7 +12,7 @@ Template.livechatDepartmentForm.helpers({
 		var selected = _.pluck(Template.instance().selectedAgents.get(), 'username');
 
 		var customerId = $('#customerSelector').val();
-		if (!customerId && customerId != "" && Template.instance().department.get().customer) {
+		if (!customerId && customerId !== '' && Template.instance().department.get().customer) {
 			customerId = Template.instance().department.get().customer._id;
 		}
 
@@ -25,7 +25,7 @@ Template.livechatDepartmentForm.helpers({
 					agentIds.push(agent.agentId);
 				});
 
-				return AgentUsers.find( { $and: [{_id: { $in: agentIds}}, { username: { $nin: selected }}]}, { sort: { username: 1 } });;
+				return AgentUsers.find({ $and: [{_id: { $in: agentIds}}, { username: { $nin: selected }}]}, { sort: { username: 1 } });
 			}
 		}
 	},
@@ -48,7 +48,7 @@ Template.livechatDepartmentForm.events({
 		var enabled = instance.$('input[name=enabled]:checked').val();
 		var name = instance.$('input[name=name]').val();
 		var description = instance.$('textarea[name=description]').val();
-		var customerId  = instance.$('select[name=customer]').val();
+		var customerId = instance.$('select[name=customer]').val();
 
 		if (enabled !== '1' && enabled !== '0') {
 			return toastr.error(t('Please_select_enabled_yes_or_no'));

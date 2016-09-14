@@ -99,6 +99,8 @@
 		"handleError"                 : false,
 		"getAvatarUrlFromUsername"    : false,
 		"LivechatCustomField"         : false,
+		"LivechatCustomer"            : false,
+		"LivechatCustomerAgents"      : false,
 		"LivechatDepartment"          : false,
 		"LivechatDepartmentAgents"    : false,
 		"livechatManagerRoutes"       : true,
