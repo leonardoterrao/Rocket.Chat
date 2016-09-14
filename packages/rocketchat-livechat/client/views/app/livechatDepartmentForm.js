@@ -37,7 +37,7 @@ Template.livechatDepartmentForm.events({
 		}
 
 		if (!customerId) {
-			return toastr.error(t('Please_fill_a_customer'));
+			return toastr.error(t('Please_select_a_customer'));
 		}
 
 		var oldBtnValue = $btn.html();
