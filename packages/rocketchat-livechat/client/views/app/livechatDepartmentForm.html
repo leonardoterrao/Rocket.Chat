@@ -22,7 +22,7 @@
                             <select name="customer" id="customerSelector">
                                 <option value="">{{_ "Select_a_customer"}}</option>
 								{{#each customers}}
-                                    <option selected="{{$eq department.customer._id _id}}" value="{{_id}}">{{customer}}</option>
+                                    <option selected="{{$eq department.customer._id _id}}" value="{{_id}}">{{name}}</option>
 								{{/each}}
                             </select>
                         </div>

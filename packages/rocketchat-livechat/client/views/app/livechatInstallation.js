@@ -18,7 +18,10 @@ Template.livechatInstallation.helpers({
 		return LivechatCustomer.find();
 	},
 	script() {
-		return loadScript('');
+		var firstCustomer = LivechatCustomer.find().fetch()[0];
+		if (firstCustomer) {
+			return loadScript(firstCustomer._id);
+		}
 	}
 });
 

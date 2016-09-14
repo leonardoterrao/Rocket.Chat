@@ -6,9 +6,8 @@
             <label>{{_ "Customer"}}</label>
             <div>
                 <select id="customerSelector">
-                    <option selected="true" value="">{{_ "Select_a_customer"}}</option>
 					{{#each customers}}
-                        <option value="{{_id}}">{{customer}}</option>
+                        <option value="{{_id}}">{{name}}</option>
 					{{/each}}
                 </select>
             </div>

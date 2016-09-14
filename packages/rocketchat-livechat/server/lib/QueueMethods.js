@@ -11,7 +11,7 @@ RocketChat.QueueMethods = {
 			throw new Meteor.Error('Invalid_livechat_token', 'Invalid token to use livechat in this website.');
 		}
 
-		const agent = RocketChat.Livechat.getNextAgent(guest.department);
+		const agent = RocketChat.Livechat.getNextAgent(guest.department, message.livechatToken);
 		if (!agent) {
 			throw new Meteor.Error('no-agent-online', 'Sorry, no online agents');
 		}
