@@ -6,9 +6,9 @@
 			{{/if}}
 			<i class="{{roomIcon}} {{userStatus}}" aria-label=""></i>
 			{{#if customer}}
-                <span class='name'>{{name}} ({{customer}})</span>
+                <span class='name {{archived}}'>{{name}} ({{customer}})</span>
 			{{else}}
-                <span class='name'>{{name}}</span>
+                <span class='name {{archived}}'>{{name}}</span>
 			{{/if}}
 			{{#if $not unread}}
 				<span class='opt'>
