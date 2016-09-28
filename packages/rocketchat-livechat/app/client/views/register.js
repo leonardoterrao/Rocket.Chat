@@ -6,11 +6,11 @@ Template.register.helpers({
 		return '';
 	},
 	hasDepartments() {
-		var customerId = FlowRouter.getParam('_livechatToken');
+		var customerId = FlowRouter.getQueryParam('livechatToken');
 		return Department.find({'customer._id': customerId}).count() > 1;
 	},
 	departments() {
-		var customerId = FlowRouter.getParam('_livechatToken');
+		var customerId = FlowRouter.getQueryParam('livechatToken');
 		return Department.find({'customer._id': customerId});
 	}
 });

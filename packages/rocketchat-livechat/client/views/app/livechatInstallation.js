@@ -8,7 +8,7 @@ function loadScript(customer) {
 	var h = d.getElementsByTagName(s)[0], j = d.createElement(s);
 	j.async = true; j.src = '${siteUrl}/packages/rocketchat_livechat/assets/rocket-livechat.js';
 	h.parentNode.insertBefore(j, h);
-})(window, document, 'script', '${siteUrl}/livechat/${customer}');
+})(window, document, 'script', '${siteUrl}/livechat?livechatToken=${customer}');
 </script>
 <!-- End of Rocket.Chat Livechat Script -->`;
 }
