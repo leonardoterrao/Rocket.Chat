@@ -1,3 +1,5 @@
+/* globals Department, Livechat, LivechatVideoCall */
+
 Template.register.helpers({
 	error() {
 		return Template.instance().error.get();
@@ -12,6 +14,9 @@ Template.register.helpers({
 	departments() {
 		var customerId = FlowRouter.getQueryParam('livechatToken');
 		return Department.find({'customer._id': customerId});
+	},
+	videoCallEnabled() {
+		return Livechat.videoCall;
 	}
 });
 
@@ -19,6 +24,14 @@ Template.register.events({
 	'submit #livechat-registration'(e, instance) {
 		var $email, $name;
 		e.preventDefault();
+
+		let start = () => {
+			instance.hideError();
+			if (instance.request === 'video') {
+				LivechatVideoCall.request();
+			}
+		};
+
 		$name = instance.$('input[name=name]');
 		$email = instance.$('input[name=email]');
 		if (!($name.val().trim() && $email.val().trim())) {
@@ -46,17 +59,25 @@ Template.register.events({
 					if (error) {
 						return instance.showError(error.reason);
 					}
+					start();
 				});
 			});
 		}
 	},
 	'click .error'(e, instance) {
 		return instance.hideError();
+	},
+	'click .request-chat'(e, instance) {
+		instance.request = 'chat';
+	},
+	'click .request-video'(e, instance) {
+		instance.request = 'video';
 	}
 });
 
 Template.register.onCreated(function() {
 	this.error = new ReactiveVar();
+	this.request = '';
 	this.showError = (msg) => {
 		$('.error').addClass('show');
 		this.error.set(msg);

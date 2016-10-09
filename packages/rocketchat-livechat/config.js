@@ -186,4 +186,29 @@ Meteor.startup(function() {
 		public: true,
 		i18nLabel: 'Office_Hours_Enabled'
 	});
+
+	RocketChat.settings.add('Livechat_videocall_enabled', false, {
+		type: 'boolean',
+		group: 'Livechat',
+		public: true,
+		i18nLabel: 'Videocall_enabled',
+		i18nDescription: 'Beta_feature_Depends_on_Video_Conference_to_be_enabled',
+		enableQuery: { _id: 'Jitsi_Enabled', value: true }
+	});
+
+	RocketChat.settings.add('Livechat_enable_transcript', false, {
+		type: 'boolean',
+		group: 'Livechat',
+		public: true,
+		i18nLabel: 'Transcript_Enabled'
+	});
+
+	RocketChat.settings.add('Livechat_transcript_message', 'Would you like a copy of this chat emailed?', {
+		type: 'string',
+		group: 'Livechat',
+		public: true,
+		i18nLabel: 'Transcript_message',
+		enableQuery: { _id: 'Livechat_enable_transcript', value: true }
+	});
+
 });

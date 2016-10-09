@@ -19,7 +19,8 @@ Meteor.methods({
 			offlineMessage: null,
 			offlineSuccessMessage: null,
 			offlineUnavailableMessage: null,
-			displayOfflineForm: null
+			displayOfflineForm: null,
+			videoCall: null
 		};
 
 		const room = RocketChat.models.Rooms.findOpenByVisitorToken(visitorToken, {
@@ -50,6 +51,10 @@ Meteor.methods({
 		info.offlineUnavailableMessage = initSettings.Livechat_offline_form_unavailable;
 		info.displayOfflineForm = initSettings.Livechat_display_offline_form;
 		info.language = initSettings.Language;
+		info.videoCall = initSettings.Livechat_videocall_enabled === true && initSettings.Jitsi_Enabled === true;
+		info.transcript = initSettings.Livechat_enable_transcript;
+		info.transcriptMessage = initSettings.Livechat_transcript_message;
+
 
 		RocketChat.models.LivechatTrigger.find().forEach((trigger) => {
 			info.triggers.push(trigger);
